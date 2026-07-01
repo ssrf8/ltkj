@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>登录</title>
+    <link rel="icon" href="data:," />
     <style>
       * {
         box-sizing: border-box;
@@ -160,6 +161,8 @@
 
     <script>
       const DASHBOARD_PATH = "/aiad/batch/dashboard";
+      const redirect = new URLSearchParams(location.search).get("redirect");
+      const redirectPath = redirect && redirect.startsWith("/aiad/batch/") ? redirect : DASHBOARD_PATH;
       const form = document.getElementById("form");
       const submit = document.getElementById("submit");
       const statusBox = document.getElementById("status");
@@ -171,7 +174,7 @@
       }
 
       go.addEventListener("click", () => {
-        location.href = DASHBOARD_PATH;
+        location.href = redirectPath;
       });
 
       form.addEventListener("submit", async (event) => {
@@ -196,7 +199,7 @@
 
           localStorage.setItem("token", JSON.stringify(data.token));
           setStatus("登录状态已写入，即将进入工作台。", "success");
-          location.href = DASHBOARD_PATH;
+          location.href = redirectPath;
         } catch (error) {
           setStatus(error.stack || error.message || String(error), "error");
         } finally {

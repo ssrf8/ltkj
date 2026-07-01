@@ -13,7 +13,37 @@
     <meta property="og:title" content="__APP_TITLE__" />
     <meta property="og:desc" content="__APP_DESC__" />
     <title>__APP_TITLE__</title>
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="data:," />
+    <script>
+      (function () {
+        var batchPrefix = '/aiad/batch';
+        var dashboardPath = '/aiad/batch/dashboard';
+
+        if (location.pathname === '/' || location.pathname === '') {
+          location.replace(dashboardPath);
+          return;
+        }
+
+        if (location.pathname.indexOf('/aiad') !== 0) {
+          location.replace(dashboardPath);
+          return;
+        }
+
+        if (location.pathname === batchPrefix || location.pathname === batchPrefix + '/') {
+          location.replace(dashboardPath);
+          return;
+        }
+
+        if (location.pathname.indexOf('/aiad') === 0 && location.pathname.indexOf(batchPrefix) !== 0) {
+          location.replace(dashboardPath);
+          return;
+        }
+
+        if (location.pathname.indexOf(batchPrefix) === 0 && !localStorage.getItem('token')) {
+          location.replace('/login?redirect=' + encodeURIComponent(location.pathname + location.search + location.hash));
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/iconfonts-v4.8.1/iconfont.css" />
     <script type="module" crossorigin src="/assets/index.24626119.js?v=local-20260701-static-cleaned-v2"></script>
     <link rel="stylesheet" href="/assets/index.484c8fe4.css?v=local-20260630" />
@@ -29,27 +59,6 @@
     <script src="/npm/dist/ort.min.js?v=local-20260630"></script>
     <script>
       (function () {
-        var batchPrefix = '/aiad/batch';
-        if (location.pathname === '/' || location.pathname === '') {
-          location.replace('/aiad/batch/dashboard');
-          return;
-        }
-
-        if (location.pathname.indexOf('/aiad') !== 0) {
-          location.replace('/aiad/batch/dashboard');
-          return;
-        }
-
-        if (location.pathname === batchPrefix || location.pathname === batchPrefix + '/') {
-          location.replace('/aiad/batch/dashboard');
-          return;
-        }
-
-        if (location.pathname.indexOf('/aiad') === 0 && location.pathname.indexOf(batchPrefix) !== 0) {
-          location.replace('/aiad/batch/dashboard');
-          return;
-        }
-
         var userAgent = navigator.userAgent;
         if (userAgent.indexOf('Trident') > -1 || userAgent.indexOf('MSIE') > -1) {
           var text = document.createElement('span');

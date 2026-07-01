@@ -169,6 +169,7 @@ app.use(
 );
 
 app.get('/favicon.ico', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.status(204).end();
 });
 app.use('/iconfonts-v4.8.1', express.static(path.join(rootDir, 'iconfonts-v4.8.1'), { immutable: true, maxAge: '1y', fallthrough: true }));
