@@ -26,8 +26,10 @@ docker run -d --name frontend-proxy \
   -e ASSET_PROXY_ORIGIN="https://your-asset-proxy.example" \
   -e MEDIA_PROXY_ORIGIN="https://your-media-origin.example" \
   -e MEDIA_REWRITE_ORIGINS="https://your-media-origin.example" \
-  -e LOGIN_PASSWORD_ORIGIN="https://your-login-origin.example" \
+  -e LOGIN_PASSWORD_ORIGIN="https://your-sso-login-origin.example" \
   -e LOGIN_TOKEN_ORIGIN="https://your-api-origin.example" \
+  -e LOGIN_SSO_REDIRECT_PATH="/pod-permission" \
+  -e LOGIN_SSO_STATE="redirectUri=/home" \
   frontend-proxy
 ```
 

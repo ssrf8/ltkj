@@ -26,6 +26,8 @@ const loginPasswordOrigin = normalizeOrigin(process.env.LOGIN_PASSWORD_ORIGIN ||
 const loginTokenOrigin = normalizeOrigin(process.env.LOGIN_TOKEN_ORIGIN || targetApiOrigin);
 const loginClientId = process.env.LOGIN_CLIENT_ID || 'pod';
 const loginRedirectPath = process.env.LOGIN_REDIRECT_PATH || '/aiad/batch/dashboard';
+const loginSsoRedirectPath = process.env.LOGIN_SSO_REDIRECT_PATH || '/pod-permission';
+const loginSsoState = process.env.LOGIN_SSO_STATE || 'redirectUri=/home';
 const batchEntryPath = '/aiad/batch/dashboard';
 const mediaProxyPath = '/__media/static';
 
@@ -380,7 +382,11 @@ async function requestLoginToken(authorizationCode) {
     clientId: loginClientId,
   }, {
     origin: loginTokenOrigin,
-    referer: `${loginTokenOrigin}/aiad/`,
+    referer: buildTokenReferer(),
+    priority: 'u=1, i',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
   });
 
   const token = result.json?.result;
@@ -420,8 +426,12 @@ async function postJson(url, payload, headers = {}) {
 }
 
 function buildLoginReferer() {
-  const redirectUri = `${loginTokenOrigin}/aiad/authorization`;
-  return `${loginPasswordOrigin}/?redirectUri=${encodeURIComponent(redirectUri)}&clientId=${encodeURIComponent(loginClientId)}&&state=redirectUri=${encodeURIComponent(loginRedirectPath)}`;
+  const redirectUri = `${loginTokenOrigin}${loginSsoRedirectPath}`;
+  return `${loginPasswordOrigin}/?clientId=${encodeURIComponent(loginClientId)}&redirectUri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(loginSsoState)}`;
+}
+
+function buildTokenReferer() {
+  return `${loginTokenOrigin}${loginSsoRedirectPath}?state=${encodeURIComponent(loginSsoState)}`;
 }
 
 function createUpstreamError(step, result) {
