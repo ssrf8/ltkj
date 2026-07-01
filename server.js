@@ -44,7 +44,17 @@ app.get(['/login', '/aiad/login'], (_req, res) => {
 });
 
 app.use((req, res, next) => {
-  if (!['GET', 'HEAD'].includes(req.method) || !req.path.startsWith('/aiad')) {
+  if (!['GET', 'HEAD'].includes(req.method)) {
+    next();
+    return;
+  }
+
+  if (req.path === '/' || req.path === '') {
+    res.redirect(302, batchEntryPath);
+    return;
+  }
+
+  if (!req.path.startsWith('/aiad')) {
     next();
     return;
   }

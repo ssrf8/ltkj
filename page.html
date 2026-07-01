@@ -30,6 +30,11 @@
     <script>
       (function () {
         var batchPrefix = '/aiad/batch';
+        if (location.pathname === '/' || location.pathname === '') {
+          location.replace('/aiad/batch/dashboard');
+          return;
+        }
+
         if (location.pathname === batchPrefix || location.pathname === batchPrefix + '/') {
           location.replace('/aiad/batch/dashboard');
           return;
