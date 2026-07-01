@@ -21,6 +21,7 @@ docker run -d --name frontend-proxy \
   -p 3000:3000 \
   -e PORT=3000 \
   -e APP_TITLE="工作台" \
+  -e PUBLIC_ENTRY_PATH="/workspace" \
   -e TARGET_API_ORIGIN="https://your-api-origin.example" \
   -e TARGET_UPLOAD_ORIGIN="https://your-upload-origin.example" \
   -e ASSET_PROXY_ORIGIN="https://your-asset-proxy.example" \
@@ -36,7 +37,7 @@ docker run -d --name frontend-proxy \
 ## Public Routes
 
 - `/login`: local login page.
-- `/aiad/batch/dashboard`: dashboard entry.
+- `/workspace`: public dashboard entry.
 - `/api/*`: proxied API requests.
 - `/upload/*`: proxied upload requests.
 - `/__media/static/*`: proxied media resources.

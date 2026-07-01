@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN" id="htmlRoot">
   <head>
-    <script src="/aiad/_app.config.js"></script>
+    <script src="/app-config.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="renderer" content="webkit" />
@@ -16,32 +16,98 @@
     <link rel="icon" href="data:," />
     <script>
       (function () {
-        var batchPrefix = '/aiad/batch';
-        var dashboardPath = '/aiad/batch/dashboard';
+        var publicEntryPath = '__PUBLIC_ENTRY_PATH__';
+        var internalRoot = '/' + 'ai' + 'ad';
+        var internalBatchPrefix = internalRoot + '/batch';
+        var internalDashboardPath = internalBatchPrefix + '/dashboard';
+        var rawPushState = history.pushState.bind(history);
+        var rawReplaceState = history.replaceState.bind(history);
+
+        function pathWithSuffix(pathname) {
+          return pathname + location.search + location.hash;
+        }
+
+        function toInternalPath(pathname) {
+          if (pathname === publicEntryPath || pathname === publicEntryPath + '/') {
+            return internalDashboardPath;
+          }
+
+          if (pathname.indexOf(publicEntryPath + '/') === 0) {
+            return internalBatchPrefix + pathname.slice(publicEntryPath.length);
+          }
+
+          return pathname;
+        }
+
+        function toPublicUrl(url) {
+          if (!url) {
+            return url;
+          }
+
+          var parsed = new URL(url, location.origin);
+          if (parsed.origin !== location.origin) {
+            return url;
+          }
+
+          if (parsed.pathname === internalDashboardPath || parsed.pathname === internalBatchPrefix || parsed.pathname === internalBatchPrefix + '/') {
+            return publicEntryPath + parsed.search + parsed.hash;
+          }
+
+          if (parsed.pathname.indexOf(internalBatchPrefix + '/') === 0) {
+            return publicEntryPath + parsed.pathname.slice(internalBatchPrefix.length) + parsed.search + parsed.hash;
+          }
+
+          if (parsed.pathname.indexOf(internalRoot) === 0) {
+            return publicEntryPath + parsed.search + parsed.hash;
+          }
+
+          return parsed.pathname + parsed.search + parsed.hash;
+        }
+
+        function installPublicHistoryMask() {
+          if (window.__PUBLIC_HISTORY_MASK_INSTALLED__) {
+            rawReplaceState(history.state, '', toPublicUrl(location.href));
+            return;
+          }
+
+          window.__PUBLIC_HISTORY_MASK_INSTALLED__ = true;
+          history.pushState = function (state, title, url) {
+            return rawPushState(state, title, toPublicUrl(url));
+          };
+
+          history.replaceState = function (state, title, url) {
+            return rawReplaceState(state, title, toPublicUrl(url));
+          };
+
+          rawReplaceState(history.state, '', toPublicUrl(location.href));
+        }
 
         if (location.pathname === '/' || location.pathname === '') {
-          location.replace(dashboardPath);
+          location.replace(publicEntryPath);
           return;
         }
 
-        if (location.pathname.indexOf('/aiad') !== 0) {
-          location.replace(dashboardPath);
+        if (location.pathname.indexOf(internalRoot) === 0) {
+          location.replace(publicEntryPath);
           return;
         }
 
-        if (location.pathname === batchPrefix || location.pathname === batchPrefix + '/') {
-          location.replace(dashboardPath);
+        if (location.pathname.indexOf(publicEntryPath) !== 0) {
+          location.replace(publicEntryPath);
           return;
         }
 
-        if (location.pathname.indexOf('/aiad') === 0 && location.pathname.indexOf(batchPrefix) !== 0) {
-          location.replace(dashboardPath);
+        if (!localStorage.getItem('token')) {
+          location.replace('/login?redirect=' + encodeURIComponent(pathWithSuffix(location.pathname)));
           return;
         }
 
-        if (location.pathname.indexOf(batchPrefix) === 0 && !localStorage.getItem('token')) {
-          location.replace('/login?redirect=' + encodeURIComponent(location.pathname + location.search + location.hash));
-        }
+        rawReplaceState(history.state, '', toInternalPath(location.pathname) + location.search + location.hash);
+
+        window.addEventListener('load', function () {
+          setTimeout(installPublicHistoryMask, 1200);
+        });
+        setTimeout(installPublicHistoryMask, 3000);
       })();
     </script>
     <link rel="stylesheet" href="/iconfonts-v4.8.1/iconfont.css" />

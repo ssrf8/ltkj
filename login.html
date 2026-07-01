@@ -160,9 +160,9 @@
     </main>
 
     <script>
-      const DASHBOARD_PATH = "/aiad/batch/dashboard";
+      const DASHBOARD_PATH = "__PUBLIC_ENTRY_PATH__";
       const redirect = new URLSearchParams(location.search).get("redirect");
-      const redirectPath = redirect && redirect.startsWith("/aiad/batch/") ? redirect : DASHBOARD_PATH;
+      const redirectPath = redirect && (redirect === DASHBOARD_PATH || redirect.startsWith(`${DASHBOARD_PATH}/`)) ? redirect : DASHBOARD_PATH;
       const form = document.getElementById("form");
       const submit = document.getElementById("submit");
       const statusBox = document.getElementById("status");

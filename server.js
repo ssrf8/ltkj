@@ -25,10 +25,12 @@ const targetUploadOrigin = normalizeOrigin(process.env.TARGET_UPLOAD_ORIGIN || t
 const loginPasswordOrigin = normalizeOrigin(process.env.LOGIN_PASSWORD_ORIGIN || '');
 const loginTokenOrigin = normalizeOrigin(process.env.LOGIN_TOKEN_ORIGIN || targetApiOrigin);
 const loginClientId = process.env.LOGIN_CLIENT_ID || 'pod';
-const loginRedirectPath = process.env.LOGIN_REDIRECT_PATH || '/aiad/batch/dashboard';
+const publicEntryPath = normalizePath(process.env.PUBLIC_ENTRY_PATH || '/workspace');
+const internalDashboardPath = '/aiad/batch/dashboard';
+const internalBatchPrefix = '/aiad/batch';
+const loginRedirectPath = process.env.LOGIN_REDIRECT_PATH || publicEntryPath;
 const loginSsoRedirectPath = process.env.LOGIN_SSO_REDIRECT_PATH || '/pod-permission';
 const loginSsoState = process.env.LOGIN_SSO_STATE || 'redirectUri=/home';
-const batchEntryPath = '/aiad/batch/dashboard';
 const mediaProxyPath = '/__media/static';
 
 const pageTemplate = fs.readFileSync(path.join(rootDir, 'page.html'), 'utf8');
@@ -41,8 +43,8 @@ app.get('/healthz', (_req, res) => {
   res.json({ ok: true });
 });
 
-app.get(['/login', '/aiad/login'], (_req, res) => {
-  res.type('html').send(loginTemplate);
+app.get('/login', (_req, res) => {
+  res.type('html').send(renderLogin());
 });
 
 app.use((req, res, next) => {
@@ -52,11 +54,16 @@ app.use((req, res, next) => {
   }
 
   if (req.path === '/' || req.path === '') {
-    res.redirect(302, batchEntryPath);
+    res.redirect(302, publicEntryPath);
     return;
   }
 
   if (!req.path.startsWith('/aiad') && isPublicRuntimeRequest(req.path)) {
+    next();
+    return;
+  }
+
+  if (isPublicEntryRequest(req.path)) {
     next();
     return;
   }
@@ -67,37 +74,21 @@ app.use((req, res, next) => {
       return;
     }
 
-    res.redirect(302, batchEntryPath);
+    res.redirect(302, publicEntryPath);
     return;
   }
 
-  if (req.path === '/aiad/batch' || req.path === '/aiad/batch/') {
-    res.redirect(302, batchEntryPath);
-    return;
-  }
-
-  const allowed =
-    req.path === '/aiad/_app.config.js' ||
-    req.path === '/aiad/batch' ||
-    req.path.startsWith('/aiad/batch/') ||
-    req.path.startsWith('/aiad/iconfonts-v4.8.1');
-
-  if (allowed) {
-    next();
-    return;
-  }
-
-  res.redirect(302, batchEntryPath);
+  res.status(410).end();
 });
 
 function isPublicRuntimeRequest(requestPath) {
   return (
     requestPath === '/favicon.ico' ||
     requestPath === '/login' ||
+    requestPath.startsWith('/__local/') ||
     requestPath === '/healthz' ||
+    requestPath === '/app-config.js' ||
     requestPath.startsWith('/assets/') ||
-    requestPath.startsWith('/view/aiad/assets/') ||
-    requestPath.startsWith('/__asset/static-global/view/aiad/assets/') ||
     requestPath.startsWith('/iconfonts-v4.8.1/') ||
     requestPath.startsWith('/npm/') ||
     requestPath.startsWith('/public/') ||
@@ -111,7 +102,11 @@ function isPublicRuntimeRequest(requestPath) {
   );
 }
 
-app.get('/aiad/_app.config.js', (_req, res) => {
+function isPublicEntryRequest(requestPath) {
+  return requestPath === publicEntryPath || requestPath.startsWith(`${publicEntryPath}/`);
+}
+
+app.get('/app-config.js', (_req, res) => {
   const config = {
     VITE_GLOB_APP_TITLE: appTitle,
     VITE_GLOB_APP_SHORT_NAME: 'aiad_view',
@@ -130,7 +125,7 @@ app.get('/aiad/_app.config.js', (_req, res) => {
 if (process.env.ENABLE_LOCAL_TOKEN_SETTER === '1') {
   app.get('/__local/set-token', (req, res) => {
     const token = typeof req.query.value === 'string' ? req.query.value : '';
-    const redirect = typeof req.query.redirect === 'string' ? req.query.redirect : '/aiad/';
+    const redirect = typeof req.query.redirect === 'string' ? req.query.redirect : publicEntryPath;
 
     res.type('html').send(`<!doctype html>
 <html>
@@ -154,28 +149,11 @@ app.use(
   })
 );
 
-app.use(
-  '/view/aiad/assets',
-  express.static(path.join(rootDir, 'assets'), {
-    ...staticOptions,
-    fallthrough: true,
-  })
-);
-
-app.use(
-  '/__asset/static-global/view/aiad/assets',
-  express.static(path.join(rootDir, 'assets'), {
-    ...staticOptions,
-    fallthrough: true,
-  })
-);
-
 app.get('/favicon.ico', (_req, res) => {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.status(204).end();
 });
 app.use('/iconfonts-v4.8.1', express.static(path.join(rootDir, 'iconfonts-v4.8.1'), { immutable: true, maxAge: '1y', fallthrough: true }));
-app.use('/aiad/iconfonts-v4.8.1', express.static(path.join(rootDir, 'iconfonts-v4.8.1'), { immutable: true, maxAge: '1y', fallthrough: true }));
 app.use('/npm', express.static(path.join(rootDir, 'npm'), { immutable: true, maxAge: '1y', fallthrough: true }));
 app.use('/public', express.static(path.join(rootDir, '__asset', 'static', 'public'), { immutable: true, maxAge: '1y', fallthrough: true }));
 app.use('/__asset/static', express.static(path.join(rootDir, '__asset', 'static'), { immutable: true, maxAge: '1y', fallthrough: true }));
@@ -270,8 +248,15 @@ function renderPage() {
   const assetOriginForHtml = publicAssetOrigin || '';
   return pageTemplate
     .replaceAll('__PUBLIC_ASSET_ORIGIN__', assetOriginForHtml)
+    .replaceAll('__PUBLIC_ENTRY_PATH__', publicEntryPath)
     .replaceAll('__APP_TITLE__', escapeHtml(appTitle))
     .replaceAll('__APP_DESC__', escapeHtml(appDesc));
+}
+
+function renderLogin() {
+  return loginTemplate
+    .replaceAll('__PUBLIC_ENTRY_PATH__', publicEntryPath)
+    .replaceAll('__APP_TITLE__', escapeHtml(appTitle));
 }
 
 function createUpstreamProxy(target, mountPath) {
@@ -432,6 +417,14 @@ function buildLoginReferer() {
 
 function buildTokenReferer() {
   return `${loginTokenOrigin}${loginSsoRedirectPath}?state=${encodeURIComponent(loginSsoState)}`;
+}
+
+function normalizePath(value) {
+  const input = String(value || '').trim();
+  if (!input || input === '/') {
+    return '/';
+  }
+  return `/${input.replace(/^\/+/, '').replace(/\/+$/, '')}`;
 }
 
 function createUpstreamError(step, result) {
