@@ -1,0 +1,2 @@
+import{_ as n,o,k as t,l as e,a3 as l,n as a}from"./index.24626119.js";const r="_Container_16a59_1",c="_Handle_16a59_8";var i={Container:r,Handle:c};const _={},d=e("img",{src:"/__asset/static/public/08aaeaeefaf14a53a254a3fc45f8496a.svg"},null,-1);function f(s,m){return o(),t("div",{class:a(s.$style.Container)},[d,e("div",{class:a(s.$style.Handle)},[l(s.$slots,"default")],2)],2)}const u={$style:i};var v=n(_,[["render",f],["__cssModules",u]]);export{v as default};
+//# sourceMappingURL=arrow.b272cf65.js.map

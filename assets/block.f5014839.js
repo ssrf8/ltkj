@@ -1,0 +1,2 @@
+import{_ as s,o as l,k as a,x as o,n,c7 as r}from"./index.24626119.js";const c={__name:"block",props:{row:{type:Number,default:5},width:{type:String,default:"100%"},height:{type:String,default:"100%"}},setup(e){return(t,h)=>(l(),a("div",{style:o({width:e.width,height:e.height}),class:n(t.$style.SkeletonBlock)},null,6))}},i={$style:r};var d=s(c,[["__cssModules",i]]);export{d as S};
+//# sourceMappingURL=block.f5014839.js.map

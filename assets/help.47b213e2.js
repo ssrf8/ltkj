@@ -1,0 +1,2 @@
+﻿import{_ as i,b as a,o as l,k as r,l as o,n as p}from"./index.24626119.js";const u="_Container_hfes6_1";var c={Container:u};const d=a({__name:"help",setup(_){function n(s){window.open(s)}return(s,e)=>(l(),r("div",{class:p(s.$style.Container)},[o("div",{onClick:e[0]||(e[0]=t=>n("#"))},"\u7528\u6237\u624B\u518C"),o("div",{onClick:e[1]||(e[1]=t=>n("/cases/more/13"))},"\u5E2E\u52A9\u4E2D\u5FC3")],2))}}),m={$style:c};var C=i(d,[["__cssModules",m]]);export{C as default};
+//# sourceMappingURL=help.47b213e2.js.map

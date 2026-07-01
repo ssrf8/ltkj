@@ -1,0 +1,2 @@
+import{_ as t,o as a,k as n,l as o,n as s}from"./index.24626119.js";const r="_Container_1k7wj_1",l="_Title_1k7wj_14";var c={Container:r,Title:l};const _={};function i(e,f){return a(),n("div",{class:s(e.$style.Container)},[o("div",{class:s(e.$style.Title)},"\u5F00\u59CB",2)],2)}const d={$style:c};var m=t(_,[["render",i],["__cssModules",d]]);export{m as default};
+//# sourceMappingURL=start-node.e05d1185.js.map

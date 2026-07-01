@@ -1,0 +1,1 @@
+function s(e){const u=e.size<10485760;return{isPassed:u,message:u?null:"\u6587\u4EF6\u5927\u5C0F\u4E0D\u80FD\u8D85\u8FC710MB"}}function n(e){const u=["image/png","image/jpg","image/jpeg"].includes(e.type);return{isPassed:u,message:u?null:"\u6587\u4EF6\u53EA\u652F\u6301png\u3001jpg\u56FE\u7247"}}export{n as a,s as c};

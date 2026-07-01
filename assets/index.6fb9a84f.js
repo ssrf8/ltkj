@@ -1,0 +1,2 @@
+import{_ as s,b as t,j as a,o,k as r,n as i,cK as c,cL as _}from"./index.24626119.js";const l="_Container_1k1ac_1";var u={Container:l};const d=t({__name:"index",setup(k){return a(async()=>{_("pod-extension");const e=c();await e.silentLogin();const n=await e.getToken();window.opener&&window.opener.postMessage({data:{token:n},type:"token"},"*")}),(e,n)=>(o(),r("div",{class:i(e.$style.Container)},"\u63D2\u4EF6\u767B\u5F55\u4E2D...",2))}}),p={$style:u};var C=s(d,[["__cssModules",p]]);export{C as default};
+//# sourceMappingURL=index.6fb9a84f.js.map

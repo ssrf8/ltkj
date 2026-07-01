@@ -1,0 +1,2 @@
+import{_ as r,y as n,i as t,j as o,o as c,h as u,n as i,f as l,ag as p,aa as _}from"./index.24626119.js";const d="_Spin_1s583_1";var y={Spin:d};const f={__name:"index",setup(x){const a=n(),e=t();return o(async()=>{const s=_();e.query.code&&e.query.redirectUri?(await s.codeToOpenId(e.query.code),a.replace(e.query.redirectUri)):a.replace("/")}),(s,m)=>(c(),u(l(p),{spinning:!0,size:"large",class:i(s.$style.Spin)},null,8,["class"]))}},g={$style:y};var S=r(f,[["__cssModules",g]]);export{S as default};
+//# sourceMappingURL=index.1438d63f.js.map

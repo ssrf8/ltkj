@@ -1,0 +1,2 @@
+import{_ as s,b as e,o as a,h as n,N as r,J as u,n as c,f as l,O as _}from"./index.24626119.js";import{openPayModal as B}from"./payment.3b478849.js";const i="_Button_12jo6_1";var m={Button:i};const p=e({__name:"index",setup(d){function t(){B()}return(o,C)=>(a(),n(l(_),{class:c(o.$style.Button),onClick:t},{default:r(()=>[u("\u53BB\u5B98\u65B9\u6C34\u5370")]),_:1},8,["class"]))}}),f={$style:m};var h=s(p,[["__cssModules",f]]);export{h as R};
+//# sourceMappingURL=index.f2f30cb1.js.map

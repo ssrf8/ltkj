@@ -1,0 +1,2 @@
+import{b as l,o as t,k as c,p as m,h as p,N as i,J as u,t as f,f as d,F as _}from"./index.24626119.js";import{T as k}from"./index.cbc632af.js";const h=l({__name:"Tags",props:["params","readonly"],emits:["close"],setup(a,{emit:o}){const r=a;function n(s){o("close",s)}return(s,x)=>(t(!0),c(_,null,m(r.params,e=>(t(),p(d(k),{key:e.param,closable:!a.readonly,onClose:C=>n(e)},{default:i(()=>[u(f(e.paramText),1)]),_:2},1032,["closable","onClose"]))),128))}});export{h as _};
+//# sourceMappingURL=Tags.1f1ec6f9.js.map

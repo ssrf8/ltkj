@@ -1,0 +1,2 @@
+import{o as a}from"./ops.2d6dc017.js";import{b as c,e as m,j as d,t as u,f as p}from"./index.24626119.js";const i=c({__name:"style-name",props:{styleCode:null,subStyleCode:null},setup(s){const e=s,o=a(),n=m(()=>((o.commonStyles?.find(t=>e.styleCode===t.code)||{})?.children?.find(t=>e.subStyleCode===t.code)||{})?.name);return d(()=>{o.getCommonStyle(e.styleCode)}),(l,r)=>u(p(n))}});export{i as default};
+//# sourceMappingURL=style-name.0a1c246d.js.map

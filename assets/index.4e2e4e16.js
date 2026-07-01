@@ -1,0 +1,2 @@
+import{_ as l,b as n,o as t,k as o,J as r,t as u,F as c,h as d,cJ as p,f as i,Y as f}from"./index.24626119.js";const m="_Input_1n7l4_1";var y={Input:m};const _=n({__name:"index",props:{disabled:{type:Boolean,default:!1},value:{type:String,default:""}},setup(e){const s=e;return(a,b)=>s.disabled?(t(),o(c,{key:0},[r(u(e.value),1)],64)):(t(),d(i(f),p({key:1,class:a.$style.Input,value:e.value},a.$attrs,{disabled:s.disabled}),null,16,["class","value","disabled"]))}}),v={$style:y};var I=l(_,[["__cssModules",v]]);export{I as L};
+//# sourceMappingURL=index.4e2e4e16.js.map

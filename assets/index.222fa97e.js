@@ -1,0 +1,2 @@
+import{_ as n,b as u,o as c,h as p,n as r,f as d,ev as i}from"./index.24626119.js";const _="_HeadSelect_w8lg2_1";var v={HeadSelect:_};const m=u({__name:"index",props:{value:null,options:null},emits:["update:value"],setup(a,{emit:l}){const e=a;return(t,s)=>(c(),p(d(i),{options:e.options,value:e.value,"onUpdate:value":s[0]||(s[0]=o=>l("update:value",o)),class:r(t.$style.HeadSelect)},null,8,["options","value","class"]))}}),f={$style:v};var H=n(m,[["__cssModules",f]]);export{H as default};
+//# sourceMappingURL=index.222fa97e.js.map

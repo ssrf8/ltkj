@@ -1,0 +1,2 @@
+import{_ as s,o as n,k as o,n as a}from"./index.24626119.js";const r="_Container_6hlb9_1";var t={Container:r};const c={};function l(e,i){return n(),o("div",{class:a(e.$style.Container)}," \u5982\u679C\u9700\u8981\u4E0B\u8F7D\u5206\u8FA8\u7387\u66F4\u5927\u7684\u56FE\u7247\uFF0C\u8BF7\u4F7F\u7528\u500D\u6570\u4E0B\u8F7D \u529F\u80FD\u54E6\uFF5E ",2)}const _={$style:t};var f=s(c,[["render",l],["__cssModules",_]]);export{f as default};
+//# sourceMappingURL=ImageTooLarge.104d8163.js.map

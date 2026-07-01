@@ -1,0 +1,2 @@
+import{ce as M}from"./index.24626119.js";var n=(e=>(e.IMAGE_LIMIT="IMAGE_LIMIT",e.IMAGE_LIMIT_SMALL="IMAGE_LIMIT_SAMll",e.PROMPT_LIMIT="PROMPT_LIMIT",e.FEED_BACK="FEED_BACK",e.MESSAGE="MESSAGE",e))(n||{});class i{_eventBus;constructor(){this._eventBus=M()}open(t,s){this._eventBus.emit(Event,{type:t,data:s})}on(t){this._eventBus.on(Event,t)}off(t){this._eventBus.off(Event,t)}}const _=new i;export{n as B,_ as b};
+//# sourceMappingURL=index.8a9c77be.js.map

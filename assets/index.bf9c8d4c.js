@@ -1,0 +1,2 @@
+import{C as o}from"./case-center.ec4a5f0b.js";import{M as e,H as O}from"./index.24626119.js";import i from"./index.46341275.js";function I(r){return[e.MOCKUP].includes(r)?o.mockup:[e.DIY_COMPOSITING,e.DIY_FULFILLMENT,e.PET_DRESSUP,e.GROUP_PHOTO,e.REDRAW].includes(r)?o.diy:[e.VIDEO,e.TK_VIDEO,e.TK_VIDEO_STORYBOARD].includes(r)?o.video:[e.WORKFLOW].includes(r)?o.workflow:o.print}function T(r){return new Promise(n=>{O({params:{options:r,onOk:t=>{n(t)}},component:i})})}export{I as g,T as o};
+//# sourceMappingURL=index.bf9c8d4c.js.map

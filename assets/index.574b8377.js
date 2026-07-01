@@ -1,0 +1,2 @@
+import{openPayModal as n}from"./payment.3b478849.js";import{b as a,o,k as r,J as u,l as c,t as i,q as d}from"./index.24626119.js";const l={key:0},p={key:1},m=a({__name:"index",props:{errorMsg:null},setup(s){const e=s;function t(){n()}return(_,D)=>e.errorMsg?.includes("\u6743\u76CA\u4E0D\u8DB3")?(o(),r("div",l,[u(" \u7075\u8C46\u4E0D\u8DB3\uFF0C"),c("span",{style:{color:"#d16c44",cursor:"pointer"},onClick:t},"\u524D\u5F80\u8D2D\u4E70")])):e.errorMsg?(o(),r("div",p,i(e.errorMsg),1)):d("",!0)}});var k=m;export{k as default};
+//# sourceMappingURL=index.574b8377.js.map

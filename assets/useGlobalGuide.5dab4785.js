@@ -1,0 +1,2 @@
+var E=(A=>(A.FIND_MATERIAL="FIND_MATERIAL",A.MAKE_MATERIAL="MAKE_MATERIAL",A.SHELF="SHELF",A.CATEGORY="CATEGORY",A.VIDEO="VIDEO",A.AVATAR="AVATAR",A.TASK="TASK",A.SEARCH="SEARCH",A))(E||{});const l={FIND_MATERIAL:null,MAKE_MATERIAL:null,SHELF:null,CATEGORY:null,VIDEO:null,AVATAR:null,TASK:null,SEARCH:null};function T(){function A(u,n){l[n]=u}return{registerGlobalGuideEl:A,els:l,RegisterKeys:E}}export{T as u};
+//# sourceMappingURL=useGlobalGuide.5dab4785.js.map

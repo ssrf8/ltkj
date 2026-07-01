@@ -1,0 +1,2 @@
+import{z as I,B as L}from"./index.24626119.js";const{batch:v}=I;function z(s){const{getListApi:o=v.getBatchDetailList}=s||{};let n,a;async function r(){const{all:t,ids:e,id:l,refreshHandle:g,onDataChange:h}=a();if(!e.length)return;g();const[u,d]=await L(o({page:1,pageSize:e.length,id:l,ids:e.join(",")}));u||t.forEach((p,m)=>{d.items.forEach(i=>{p.id===i.id&&(t[m]=i,h?.("set",i))})})}function c(t){a=t,n=setInterval(()=>{r()},5e3)}function f(){clearInterval(n)}return{init:c,destroy:f}}export{z as u};
+//# sourceMappingURL=useAutoRefresh.2d17a4af.js.map

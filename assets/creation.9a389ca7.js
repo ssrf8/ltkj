@@ -1,0 +1,2 @@
+import{z as c}from"./index.24626119.js";import{a as i}from"./poll.899de3bd.js";const{batch:r}=c,g=()=>{async function s(a,n){const t=await r.createJob({ability:a,debugger:n}),e=await i(async()=>await r.getJobDetail(t,t),o=>["succeed","failed"].includes(o.status),1e3);if(e.results?.length)return e;throw new Error(e.errorMsg)}return{generate:s}};export{g as u};
+//# sourceMappingURL=creation.9a389ca7.js.map

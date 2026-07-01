@@ -1,0 +1,2 @@
+import{E as o,m as e,J as u,P as s,F as a}from"./index.24626119.js";function n(){o.success(()=>e(a,null,[u("\u5DF2\u5728\u540E\u53F0\u8FDB\u884C\u4E0B\u8F7D\uFF0C"),e("span",{style:{color:"rgba(209, 108, 68, 1)",textDecorationLine:"underline",cursor:"pointer"},onClick:()=>{s.push({name:"DownloadCenter"})}},[u("\u53BB\u4E0B\u8F7D\u4E2D\u5FC3\u67E5\u770B")])]))}export{n as showDownloadMessage};
+//# sourceMappingURL=message.8c582f28.js.map

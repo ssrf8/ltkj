@@ -1,0 +1,2 @@
+import{_ as l,o as e,k as s,F as a,p as o,m as r,n as c,f as _}from"./index.24626119.js";import{S as i}from"./block.f5014839.js";const k="_Skeleton_rewgz_1";var m={Skeleton:k};const p={class:"flex items-center relative"},u={__name:"channel-skeleton",setup(f){return(t,h)=>(e(),s("div",p,[(e(),s(a,null,o(4,n=>r(_(i),{class:c(t.$style.Skeleton),width:"170px",height:"70px",key:n},null,8,["class"])),64))]))}},d={$style:m};var v=l(u,[["__cssModules",d]]);export{v as default};
+//# sourceMappingURL=channel-skeleton.2a2a9c2f.js.map

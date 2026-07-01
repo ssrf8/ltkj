@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" id="htmlRoot">
+  <head>
+    <script src="/aiad/_app.config.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover,width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0"
+    />
+    <meta property="og:image" content="/__asset/static/public/0e4e51b2d0574336979d5613b43f0068.png" />
+    <meta property="og:title" content="__APP_TITLE__" />
+    <meta property="og:desc" content="__APP_DESC__" />
+    <title>__APP_TITLE__</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/iconfonts-v4.8.1/iconfont.css" />
+    <script type="module" crossorigin src="/assets/index.24626119.js?v=local-20260701-static-cleaned-v2"></script>
+    <link rel="stylesheet" href="/assets/index.484c8fe4.css?v=local-20260630" />
+    <link
+      disabled="disabled"
+      id="__VITE_PLUGIN_THEME-ANTD_DARK_THEME_LINK__"
+      rel="alternate stylesheet"
+      href="/assets/app-antd-dark-theme-style.e3b0c442.css"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="/npm/dist/ort.min.js?v=local-20260630"></script>
+    <script>
+      (function () {
+        var batchPrefix = '/aiad/batch';
+        if (location.pathname === batchPrefix || location.pathname === batchPrefix + '/') {
+          location.replace('/aiad/batch/dashboard');
+          return;
+        }
+
+        if (location.pathname.indexOf('/aiad') === 0 && location.pathname.indexOf(batchPrefix) !== 0) {
+          location.replace('/aiad/batch/dashboard');
+          return;
+        }
+
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf('Trident') > -1 || userAgent.indexOf('MSIE') > -1) {
+          var text = document.createElement('span');
+          text.innerText = '您正在使用ie引擎的浏览器，请切换至极速模式或者下载chrome浏览器继续使用';
+          document.getElementById('app').appendChild(text);
+          return;
+        }
+
+        var htmlRoot = document.getElementById('htmlRoot');
+        window.localStorage.setItem('__APP__DARK__MODE__', 'dark');
+        var theme = window.localStorage.getItem('__APP__DARK__MODE__');
+        if (htmlRoot && theme) {
+          htmlRoot.setAttribute('data-theme', theme);
+        }
+      })();
+    </script>
+  </body>
+</html>

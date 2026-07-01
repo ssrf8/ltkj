@@ -1,0 +1,2 @@
+import{_ as n,b as r,e as c,o as p,h as d,cJ as i,f as s,ev as v}from"./index.24626119.js";var _={};const f=r({__name:"sites-select",props:{value:null},emits:["update:value"],setup(a,{emit:t}){const l=a,u=c(()=>JSON.parse(l.value||"[]"));function o(e){t("update:value",JSON.stringify(e))}return(e,S)=>(p(),d(s(v),i(e.$attrs,{value:s(u),"onUpdate:value":o,placeholder:"\u8BF7\u9009\u62E9"}),null,16,["value"]))}}),m={$style:_};var y=n(f,[["__cssModules",m]]);export{y as default};
+//# sourceMappingURL=sites-select.6d38dd90.js.map

@@ -1,0 +1,2 @@
+import{_ as a,o as e,h as o,N as r,J as t,n as c,f as l}from"./index.24626119.js";import{T as _}from"./index.cbc632af.js";import{s as n}from"./index.vue_used_vue_type_style_index_0_lang.module.19f20709.js";const m={__name:"index",setup(f){return(s,i)=>(e(),o(l(_),{color:"rgba(209, 108, 68, 1)",class:c(s.$style.Tag)},{default:r(()=>[t("Q\u7248")]),_:1},8,["class"]))}},p={$style:n};var T=a(m,[["__cssModules",p]]);export{T as Q};
+//# sourceMappingURL=index.d3d97cef.js.map

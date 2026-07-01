@@ -1,0 +1,1 @@
+const s={COMMON:"common",STORYBOARD:"storyboard"},o={V:"v_model",S:"s_model"},a="tk_video_storyboard_prefs",t=[{label:"8s",value:8}],l=[{label:"8s",value:8},{label:"15s",value:15}],e=[{label:"480p",value:"480p"},{label:"720p",value:"720p"}],n=["16:9","9:16"],O=["1:1","3:4","4:3","9:16","16:9"];export{a as S,s as T,o as a,O as b,n as c,l as d,t as e,e as r};

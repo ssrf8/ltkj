@@ -1,0 +1,1 @@
+const l=[{label:"Temu",value:"Temu"},{label:"Tiktok",value:"Tiktok"},{label:"Shein",value:"Shein"},{label:"Amazon",value:"Amazon"},{label:"\u5176\u4ED6",value:"\u5176\u4ED6"}],T=[{label:"\u5168\u90E8\u5E73\u53F0",value:void 0},...l];export{T,l as a};

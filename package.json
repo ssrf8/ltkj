@@ -1,0 +1,16 @@
+{
+  "name": "ltkj-frontend-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-port Node frontend host and API proxy for the packaged SPA.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,1 @@
+const e="_Header_kyz8a_1";var o={Header:e};const _="_Feedback_pxy4z_1",t="_Left_pxy4z_5",a="_Right_pxy4z_12",c="_Qrcode_pxy4z_17",s="_Time_pxy4z_21";var d={Feedback:_,Left:t,Right:a,Qrcode:c,Time:s};export{d as a,o as s};

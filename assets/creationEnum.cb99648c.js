@@ -1,0 +1,2 @@
+import{S as A}from"./index.24626119.js";var E=(u=>(u.CREATE="\u76F4\u63A5\u751F\u6210",u.REITERATE="\u518D\u8FED\u4EE3",u))(E||{}),F=(u=>(u.UPLOAD="\u672C\u5730\u4E0A\u4F20",u.INSPIRATION="\u7075\u611F\u96C6",u.EDITOR="\u667A\u80FD\u7F16\u8F91",u.CREATE="\u76F4\u63A5\u751F\u6210",u.REITERATE="\u518D\u8FED\u4EE3",u.CANVAS="\u667A\u7ED8\u753B\u5E03",u))(F||{});const I={[A.WORK]:"\u56FE\u7247",[A.CANVAS]:"\u753B\u5E03",[A.INSPIRATION]:"\u7075\u611F"},D={FAST:0,SLOW:1};export{E as C,D as G,F as a,I as b};
+//# sourceMappingURL=creationEnum.cb99648c.js.map

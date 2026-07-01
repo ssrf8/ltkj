@@ -1,0 +1,2 @@
+import{a8 as n,H as a}from"./index.24626119.js";import i from"./index.1c48ebdd.js";const o="__storage_limit_modal_remind_later_expire__";function m(){const e=new Date;return new Date(e.getFullYear(),e.getMonth(),e.getDate(),23,59,59,999).getTime()}function t(){return Number(localStorage.getItem(o)||0)>Date.now()}function c(){localStorage.setItem(o,String(m()))}function u(e={}){return a({params:{onRemindLater:c,...e},component:i})}function l(){if(t())return;n().updateStorageInfo().then(r=>{t()||r.remain>0||u()})}export{l as c};
+//# sourceMappingURL=index.808ffc36.js.map

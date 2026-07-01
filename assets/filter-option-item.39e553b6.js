@@ -1,0 +1,2 @@
+import{_ as a,b as i,eG as r,e as m,o as _,k as p,t as u,n as d,f as e}from"./index.24626119.js";const v="_Item_18iqy_1",f="_Active_18iqy_19";var k={Item:v,Active:f};const y=i({__name:"filter-option-item",props:{label:null,value:null,selected:{type:Boolean}},emits:["click"],setup(t,{emit:l}){const s=t,c=r(),o=m(()=>s.selected),n=()=>{l("click",s.value)};return(C,I)=>(_(),p("span",{class:d([e(c).Item,e(o)?e(c).Active:""]),onClick:n},u(t.label),3))}}),A={$style:k};var x=a(y,[["__cssModules",A]]);export{x as default};
+//# sourceMappingURL=filter-option-item.39e553b6.js.map

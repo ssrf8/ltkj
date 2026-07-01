@@ -1,0 +1,2 @@
+import{z as s,H as u}from"./index.24626119.js";import c from"./index.e2f3b515.js";function m(){let t=!1,l;function r(o){return t=!1,new Promise(e=>{l=setInterval(async()=>{try{const a=await i(o);a&&(n(),e(a))}catch{n(),e(null)}},2e3)})}function n(){t=!0,clearInterval(l)}async function i(o){if(t)return;const e=await s.batch.getExportTemuJobDetail(o);if(["failed","succeed"].includes(e.status))return e}return{startPolling:r,endPolling:n}}function d(t={}){return u({params:t,component:c})}export{d as o,m as u};
+//# sourceMappingURL=index.3d598557.js.map

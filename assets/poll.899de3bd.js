@@ -1,0 +1,2 @@
+import{B as f}from"./index.24626119.js";function p(o,n,a){const{success:i,error:r,interval:e=5e3}=a||{};let l=!1,c=0;const t=async()=>{if(l)return;const[s,u]=await f(o());s?(r?.(s),c++,c>=3?l=!0:setTimeout(t,e)):(c=0,n(u)?i?.(u):setTimeout(t,e))};t.stop=()=>l=!0;try{t()}catch(s){r?.(s),t()}finally{return t}}async function y(o,n,a){return new Promise((i,r)=>{p(o,n,{success:e=>{i(e)},error:e=>{r(e)},interval:a})})}export{y as a,p};
+//# sourceMappingURL=poll.899de3bd.js.map

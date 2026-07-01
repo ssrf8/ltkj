@@ -1,0 +1,1 @@
+function r(e){const a={scene:e.scene};return e.team&&(a.team=!0),e.type!=null&&e.type!==""&&(a.type=e.type),e.category1&&(a.category1=e.category1),e.category2&&(a.category2=e.category2),e.platform&&(a.platform=e.platform),a}export{r as b};

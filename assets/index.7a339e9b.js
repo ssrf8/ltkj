@@ -1,0 +1,2 @@
+import{c as a,y as c,i,o as u,k as d}from"./index.24626119.js";const _={__name:"index",setup(p){const r=a(),n=c(),o=i();function s(){return"."+window.location.hostname.split(".").slice(-2).join(".")}return r.login().then(()=>{const e="/",t=o.query.state&&o.query.state.split("redirectUri=")[1].replace("/aiad","")||e;document.cookie=`ucode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;domain=${s()};`,n.replace(t)}),(e,t)=>(u(),d("div"))}};export{_ as default};
+//# sourceMappingURL=index.7a339e9b.js.map

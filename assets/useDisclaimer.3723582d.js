@@ -1,0 +1,2 @@
+import{r as s,bk as u,Q as i,f as r}from"./index.24626119.js";function l(){const e=s(null);function t(n){if(!u())throw new Error("useProtocol() can only be used inside setup() or functional components!");i(()=>{e.value=null}),n!==r(e)&&(e.value=n)}const o=()=>{const n=r(e);if(!n)throw new Error("useProtocol instance is undefined!");return n};return[t,{validate:()=>o()?.validate?.()}]}export{l as u};
+//# sourceMappingURL=useDisclaimer.3723582d.js.map

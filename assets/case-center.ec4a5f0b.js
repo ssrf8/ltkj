@@ -1,0 +1,2 @@
+import{a6 as i,aU as u}from"./index.24626119.js";var l=(o=>(o.print="print",o.diy="diy",o.mockup="mockup",o.video="video",o.workflow="workflow",o))(l||{});function d(o,n,t){const e=t[o];if(["print","mockup","video","workflow"].includes(o))return e.find(r=>r.value===n)?.value}function f(o){const n=i(),t=u(),e=n.userInfo?.category,r=t?.defaultCaseType.find(a=>a.value===e)?.label;return t?.defaultCaseType,o.find(a=>a.label===r)?.value||o?.[0]?.value}export{l as C,d as a,f as g};
+//# sourceMappingURL=case-center.ec4a5f0b.js.map

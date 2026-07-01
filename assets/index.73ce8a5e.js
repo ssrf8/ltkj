@@ -1,0 +1,2 @@
+import{b as m,o as p,h as s,N as a,J as l,m as c,f,b$ as u}from"./index.24626119.js";import d from"./mark.95dd9dc3.js";const x=m({__name:"index",props:{mark:{type:Boolean,default:!1},placement:{type:String,default:"left"}},emits:["update:mark"],setup(r,{emit:n}){const e=r;return(i,t)=>(p(),s(f(u),{placement:e.placement},{content:a(()=>[l("\u6807\u8BB0")]),default:a(()=>[c(d,{mark:e.mark,"onUpdate:mark":t[0]||(t[0]=o=>n("update:mark",o))},null,8,["mark"])]),_:1},8,["placement"]))}});export{x as default};
+//# sourceMappingURL=index.73ce8a5e.js.map

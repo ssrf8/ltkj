@@ -1,0 +1,1 @@
+function f(s,o,t){let c=1e3,n=600;if(s>1){const e=o,l=o/s;l>t?(n=t,c=t*s):(n=l,c=e)}else{const e=t,l=t*s;l>o?(c=o,n=o/s):(c=l,n=e)}return{width:c,height:n}}function i(s,o){let t=s.split(","),c=t[0].match(/:(.*?);/)[1],n=atob(t[1]),e=n.length,l=new Uint8Array(e);for(;e--;)l[e]=n.charCodeAt(e);return new File([l],o,{type:c})}export{i as d,f as g};

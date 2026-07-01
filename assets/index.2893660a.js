@@ -1,0 +1,2 @@
+import{b as c,y as p,f as _,o as i,k as l}from"./index.24626119.js";const y=c({__name:"index",setup(u){const{currentRoute:o,replace:a}=p(),{params:e,query:n}=_(o),{path:r,_redirect_type:s="path"}=e;Reflect.deleteProperty(e,"_redirect_type"),Reflect.deleteProperty(e,"path");const t=Array.isArray(r)?r.join("/"):r;return a(s==="name"?{name:t,query:n,params:e}:{path:t.startsWith("/")?t:"/"+t,query:n}),(f,m)=>(i(),l("div"))}});export{y as default};
+//# sourceMappingURL=index.2893660a.js.map

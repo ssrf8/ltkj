@@ -1,0 +1,2 @@
+import{b as r,I as s,o as l,h as m,x as p}from"./index.24626119.js";const u=r({__name:"mark",props:{mark:{type:Boolean,default:!1}},emits:["update:mark"],setup(t,{emit:n}){const e=t;return(c,o)=>{const a=s("IconFont");return l(),m(a,{style:p({color:e.mark?"#d16c44":null}),type:"icon-ic_mark2",onClick:o[0]||(o[0]=k=>n("update:mark",!e.mark))},null,8,["style"])}}});export{u as default};
+//# sourceMappingURL=mark.95dd9dc3.js.map

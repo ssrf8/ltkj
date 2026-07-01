@@ -1,0 +1,2 @@
+import{d as a}from"./index.032d83e0.js";import{_ as r,b as l,o as s,k as t,l as i,f as c,t as m,q as _,n as p}from"./index.24626119.js";const d="_Container_nlwrt_1";var u={Container:d};const f=["src"],y=["title"],C=l({__name:"index",props:{type:null,name:null},emits:[],setup(n,{emit:h}){const e=n;return(o,k)=>(s(),t("div",{class:p(o.$style.Container)},[i("img",{src:c(a)[e.type]},null,8,f),e.name?(s(),t("div",{key:0,title:e.name},m(e.name),9,y)):_("",!0)],2))}}),g={$style:u};var B=r(C,[["__cssModules",g]]);export{B as default};
+//# sourceMappingURL=index.b4df06e2.js.map

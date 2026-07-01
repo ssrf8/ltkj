@@ -1,0 +1,2 @@
+import{_ as s,o as n,k as o,n as a}from"./index.24626119.js";const r="_Container_6hlb9_1";var t={Container:r};const c={};function l(e,i){return n(),o("div",{class:a(e.$style.Container)},"\u60A8\u7684\u63CF\u8FF0\u5B58\u5728\u8FDD\u89C4\uFF0C\u65E0\u6CD5\u751F\u6210\uFF0C\u8BF7\u8C03\u6574\u540E\u91CD\u8BD5",2)}const _={$style:t};var f=s(c,[["render",l],["__cssModules",_]]);export{f as default};
+//# sourceMappingURL=PromptBanned.9e453644.js.map

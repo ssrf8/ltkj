@@ -1,0 +1,2 @@
+import{z as o,i as l,r as t,e as i}from"./index.24626119.js";const{getReferenceChannels:f}=o.inspirations;function v(){const s=l(),e=t([]),n=t(!1),u=i(()=>s.query.channel?e.value.find(a=>a.id+""===s.query.channel):e.value[0]);async function c(a){n.value=!0;const r=await f(a);e.value=r||[],n.value=!1}return{channels:e,channelsLoading:n,activeChannel:u,fetchChannels:c}}export{v as u};
+//# sourceMappingURL=useChannel.2f7352c5.js.map

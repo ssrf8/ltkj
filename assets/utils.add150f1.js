@@ -1,0 +1,2 @@
+const r="__MOCKUP_TEMPLATE_AUTO_MATTING__";function c(){const t=localStorage.getItem(r);return t===null?!1:t==="true"}function s(t){localStorage.setItem(r,String(t))}function u(t){const n=t.split(".");return"."+n[n.length-1]}function g(t,n){const e=t?.names;if(e?.length)return t?.mockupType==="psd"?{...e[0],imageName:String(n+1)}:e[n]}function i(t,n,e){if(n&&n.length&&t){const a=u(e);return n.map(o=>t[o]).join("-")+a}return e}export{i as a,g as b,c as g,s};
+//# sourceMappingURL=utils.add150f1.js.map

@@ -1,0 +1,2 @@
+﻿import{_ as n,b as t,o,k as a,J as u,m as i,f as r,ai as c,n as l}from"./index.24626119.js";const p="_Container_xy8ex_1";var _={Container:p};const C=t({__name:"Tips",setup(m){function e(){window.open("/cases/10")}return(s,f)=>(o(),a("div",{onClick:e,class:l(s.$style.Container)},[u(" tips\uFF1A\u5982\u4F55\u8BA9AI\u542C\u61C2\u6211\u4EEC\u7684\u63CF\u8FF0 "),i(r(c),{style:{"font-size":"14px"}})],2))}}),d={$style:_};var F=n(C,[["__cssModules",d]]);export{F as default};
+//# sourceMappingURL=Tips.862a1356.js.map
