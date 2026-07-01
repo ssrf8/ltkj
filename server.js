@@ -54,8 +54,18 @@ app.use((req, res, next) => {
     return;
   }
 
-  if (!req.path.startsWith('/aiad')) {
+  if (!req.path.startsWith('/aiad') && isPublicRuntimeRequest(req.path)) {
     next();
+    return;
+  }
+
+  if (!req.path.startsWith('/aiad')) {
+    if (req.path.includes('.')) {
+      res.status(404).end();
+      return;
+    }
+
+    res.redirect(302, batchEntryPath);
     return;
   }
 
@@ -66,7 +76,8 @@ app.use((req, res, next) => {
 
   const allowed =
     req.path === '/aiad/_app.config.js' ||
-    req.path.startsWith('/aiad/batch') ||
+    req.path === '/aiad/batch' ||
+    req.path.startsWith('/aiad/batch/') ||
     req.path.startsWith('/aiad/iconfonts-v4.8.1');
 
   if (allowed) {
@@ -76,6 +87,27 @@ app.use((req, res, next) => {
 
   res.redirect(302, batchEntryPath);
 });
+
+function isPublicRuntimeRequest(requestPath) {
+  return (
+    requestPath === '/favicon.ico' ||
+    requestPath === '/login' ||
+    requestPath === '/healthz' ||
+    requestPath.startsWith('/assets/') ||
+    requestPath.startsWith('/view/aiad/assets/') ||
+    requestPath.startsWith('/__asset/static-global/view/aiad/assets/') ||
+    requestPath.startsWith('/iconfonts-v4.8.1/') ||
+    requestPath.startsWith('/npm/') ||
+    requestPath.startsWith('/public/') ||
+    requestPath.startsWith('/__asset/static/') ||
+    requestPath.startsWith('/__asset/static-dev/') ||
+    requestPath.startsWith('/__media/static/') ||
+    requestPath.startsWith('/api/') ||
+    requestPath === '/api' ||
+    requestPath.startsWith('/upload/') ||
+    requestPath === '/upload'
+  );
+}
 
 app.get('/aiad/_app.config.js', (_req, res) => {
   const config = {
