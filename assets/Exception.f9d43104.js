@@ -4,25 +4,30 @@ const n=t({
   setup(){
     const a=()=>document.body&&document.body.classList.add("simple-404-page");
     const i=()=>document.body&&document.body.classList.remove("simple-404-page");
+    let o;
+    const d=()=>{
+      const l=document.querySelector(".simple-404"),p=document.getElementById("app");
+      if(!l||!p)return;
+      for(let h=l;h&&h!==p&&h.parentElement;){
+        const u=h.parentElement;
+        Array.from(u.children).forEach(m=>{m!==h&&m.remove()});
+        h=u
+      }
+      Array.from(document.body.children).forEach(h=>{h!==p&&h.remove()})
+    };
     const c=()=>{
       a();
-      setTimeout(()=>{
-        const d=document.querySelector(".simple-404"),l=document.getElementById("app");
-        if(!d||!l)return;
-        for(let p=d;p&&p!==l&&p.parentElement;){
-          const h=p.parentElement;
-          Array.from(h.children).forEach(u=>{u!==p&&u.remove()});
-          p=h
-        }
-      })
+      setTimeout(d);
+      o&&o.disconnect();
+      document.body&&(o=new MutationObserver(d),o.observe(document.body,{childList:!0,subtree:!0}))
     };
     c();
     s(c);
-    r(i);
-    const o=()=>{location.href="/workspace"};
+    r(()=>{i();o&&o.disconnect()});
+    const l=()=>{location.href="/workspace"};
     return()=>e("main",{class:"simple-404"},[
       e("div",{class:"simple-404__code"},"404"),
-      e("button",{class:"simple-404__button",type:"button",onClick:o},"返回首页")
+      e("button",{class:"simple-404__button",type:"button",onClick:l},"返回")
     ])
   }
 });
