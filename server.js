@@ -33,6 +33,7 @@ const loginSsoRedirectPath = process.env.LOGIN_SSO_REDIRECT_PATH || '/pod-permis
 const loginSsoState = process.env.LOGIN_SSO_STATE || 'redirectUri=/home';
 const mediaProxyPath = '/__media/static';
 const authDebugEnabled = process.env.AUTH_DEBUG === '1';
+const authDebugBlockReload = process.env.AUTH_DEBUG_BLOCK_RELOAD === '1';
 
 const pageTemplate = fs.readFileSync(path.join(rootDir, 'page.html'), 'utf8');
 const loginTemplate = fs.readFileSync(path.join(rootDir, 'login.html'), 'utf8');
@@ -349,8 +350,17 @@ function renderAuthDebugScript(pageName) {
         }
       }
 
+      function stackTrace() {
+        try {
+          return String(new Error('auth-debug-stack').stack || '').split('\\n').slice(0, 14).join('\\n');
+        } catch {
+          return '';
+        }
+      }
+
       if (!window.__AUTH_DEBUG_NETWORK_PATCHED__) {
         window.__AUTH_DEBUG_NETWORK_PATCHED__ = true;
+        window.__AUTH_DEBUG_BLOCK_RELOAD__ = ${authDebugBlockReload ? 'true' : 'false'};
 
         var rawFetch = window.fetch;
         if (typeof rawFetch === 'function') {
@@ -430,9 +440,29 @@ function renderAuthDebugScript(pageName) {
             log('location-replace', { url: pathOnly(url) });
             return rawReplace.apply(this, arguments);
           };
+          var rawReload = Location.prototype.reload;
+          Location.prototype.reload = function () {
+            log('location-reload', {
+              blocked: Boolean(window.__AUTH_DEBUG_BLOCK_RELOAD__),
+              recentNetwork: readRecentNetwork(),
+              stack: stackTrace()
+            });
+            if (window.__AUTH_DEBUG_BLOCK_RELOAD__) {
+              return;
+            }
+            return rawReload.apply(this, arguments);
+          };
         } catch (error) {
           log('location-patch-failed', { message: error && error.message || String(error) });
         }
+
+        var rawSetTimeout = window.setTimeout;
+        window.setTimeout = function (handler, timeout) {
+          if (typeof handler === 'string' && /location\\s*\\.\\s*reload|document\\s*\\.\\s*location\\s*\\.\\s*reload/.test(handler)) {
+            log('set-timeout-string-reload', { timeout: timeout, handler: handler.slice(0, 300), stack: stackTrace() });
+          }
+          return rawSetTimeout.apply(this, arguments);
+        };
       }
 
       try {
