@@ -17,6 +17,46 @@
     __AUTH_DEBUG_SCRIPT__
     <script>
       (function () {
+        function retryOnce(reason) {
+          var key = '__module_preload_retry__';
+          var retriedAt = Number(sessionStorage.getItem(key) || '0');
+          if (Date.now() - retriedAt < 60000) {
+            console.error('[module-load]', 'dynamic import failed after retry', reason);
+            return;
+          }
+
+          sessionStorage.setItem(key, String(Date.now()));
+          if (window.caches && typeof window.caches.keys === 'function') {
+            window.caches.keys()
+              .then(function (keys) {
+                return Promise.all(keys.map(function (cacheKey) { return window.caches.delete(cacheKey); }));
+              })
+              .finally(function () { location.reload(); });
+            return;
+          }
+
+          location.reload();
+        }
+
+        function isDynamicImportFailure(reason) {
+          return /Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module/i.test(String(reason && (reason.message || reason.stack) || reason));
+        }
+
+        window.addEventListener('vite:preloadError', function (event) {
+          event.preventDefault();
+          retryOnce(event.payload);
+        });
+
+        window.addEventListener('unhandledrejection', function (event) {
+          if (isDynamicImportFailure(event.reason)) {
+            event.preventDefault();
+            retryOnce(event.reason);
+          }
+        });
+      })();
+    </script>
+    <script>
+      (function () {
         var publicEntryPath = '__PUBLIC_ENTRY_PATH__';
         var internalRoot = '/' + 'ai' + 'ad';
         var internalBatchPrefix = internalRoot + '/batch';
