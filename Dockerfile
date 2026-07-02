@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-COPY server.js page.html login.html ./
+COPY server.js page.html login.html favicon.svg ./
 COPY assets ./assets
 COPY iconfonts-v4.8.1 ./iconfonts-v4.8.1
 COPY npm ./npm

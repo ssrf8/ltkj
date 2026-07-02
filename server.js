@@ -84,6 +84,7 @@ app.use((req, res, next) => {
 function isPublicRuntimeRequest(requestPath) {
   return (
     requestPath === '/favicon.ico' ||
+    requestPath === '/favicon.svg' ||
     requestPath === '/login' ||
     requestPath.startsWith('/__local/') ||
     requestPath === '/healthz' ||
@@ -149,9 +150,9 @@ app.use(
   })
 );
 
-app.get('/favicon.ico', (_req, res) => {
+app.get(['/favicon.ico', '/favicon.svg'], (_req, res) => {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
-  res.status(204).end();
+  res.type('image/svg+xml').sendFile(path.join(rootDir, 'favicon.svg'));
 });
 app.use('/iconfonts-v4.8.1', express.static(path.join(rootDir, 'iconfonts-v4.8.1'), { immutable: true, maxAge: '1y', fallthrough: true }));
 app.use('/npm', express.static(path.join(rootDir, 'npm'), { immutable: true, maxAge: '1y', fallthrough: true }));
