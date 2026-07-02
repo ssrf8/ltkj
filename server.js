@@ -332,6 +332,23 @@ function renderAuthDebugScript(pageName) {
         return path.indexOf('/api/') === 0 || path === '/api' || path.indexOf('/upload/') === 0 || path === '/upload' || Number(status) >= 400;
       }
 
+      function rememberNetwork(entry) {
+        try {
+          var key = '__auth_debug_recent_network__';
+          var list = JSON.parse(sessionStorage.getItem(key) || '[]');
+          list.push(Object.assign({ at: new Date().toISOString() }, entry));
+          sessionStorage.setItem(key, JSON.stringify(list.slice(-30)));
+        } catch {}
+      }
+
+      function readRecentNetwork() {
+        try {
+          return JSON.parse(sessionStorage.getItem('__auth_debug_recent_network__') || '[]').slice(-10);
+        } catch {
+          return [];
+        }
+      }
+
       if (!window.__AUTH_DEBUG_NETWORK_PATCHED__) {
         window.__AUTH_DEBUG_NETWORK_PATCHED__ = true;
 
@@ -342,21 +359,26 @@ function renderAuthDebugScript(pageName) {
             var url = typeof input === 'string' ? input : input && input.url;
             return rawFetch.apply(this, arguments).then(function (response) {
               if (shouldLogRequest(url, response.status)) {
-                log('fetch', {
+                var entry = {
                   method: (init && init.method) || (input && input.method) || 'GET',
                   url: pathOnly(url),
                   status: response.status,
                   ok: response.ok,
                   durationMs: Date.now() - startedAt
-                });
+                };
+                rememberNetwork(entry);
+                log('fetch', entry);
               }
               return response;
             }, function (error) {
-              log('fetch-error', {
+              var entry = {
                 url: pathOnly(url),
+                status: 'error',
                 message: error && error.message || String(error),
                 durationMs: Date.now() - startedAt
-              });
+              };
+              rememberNetwork(entry);
+              log('fetch-error', entry);
               throw error;
             });
           };
@@ -373,16 +395,44 @@ function renderAuthDebugScript(pageName) {
           xhr.addEventListener('loadend', function () {
             var info = xhr.__authDebug || {};
             if (shouldLogRequest(info.url, xhr.status)) {
-              log('xhr', {
+              var entry = {
                 method: info.method || 'GET',
                 url: pathOnly(info.url),
                 status: xhr.status,
                 durationMs: Date.now() - (info.startedAt || Date.now())
-              });
+              };
+              rememberNetwork(entry);
+              log('xhr', entry);
             }
           });
           return rawSend.apply(this, arguments);
         };
+
+        var rawPushState = history.pushState;
+        var rawReplaceState = history.replaceState;
+        history.pushState = function (state, title, url) {
+          log('history-push', { url: pathOnly(url || location.href) });
+          return rawPushState.apply(this, arguments);
+        };
+        history.replaceState = function (state, title, url) {
+          log('history-replace', { url: pathOnly(url || location.href) });
+          return rawReplaceState.apply(this, arguments);
+        };
+
+        try {
+          var rawAssign = Location.prototype.assign;
+          var rawReplace = Location.prototype.replace;
+          Location.prototype.assign = function (url) {
+            log('location-assign', { url: pathOnly(url) });
+            return rawAssign.apply(this, arguments);
+          };
+          Location.prototype.replace = function (url) {
+            log('location-replace', { url: pathOnly(url) });
+            return rawReplace.apply(this, arguments);
+          };
+        } catch (error) {
+          log('location-patch-failed', { message: error && error.message || String(error) });
+        }
       }
 
       try {
@@ -398,6 +448,12 @@ function renderAuthDebugScript(pageName) {
       });
       window.addEventListener('unhandledrejection', function (event) {
         log('unhandled-rejection', { reason: String(event.reason && (event.reason.stack || event.reason.message) || event.reason) });
+      });
+      window.addEventListener('pagehide', function (event) {
+        log('pagehide', { persisted: event.persisted, recentNetwork: readRecentNetwork() });
+      });
+      window.addEventListener('beforeunload', function () {
+        log('beforeunload', { recentNetwork: readRecentNetwork() });
       });
       log('page-load', {
         navigationType: performance.getEntriesByType('navigation')[0]?.type || null,
