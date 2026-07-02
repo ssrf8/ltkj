@@ -49,6 +49,7 @@ LOGIN_CLIENT_ID=pod
 LOGIN_REDIRECT_PATH=/workspace
 LOGIN_SSO_REDIRECT_PATH=/pod-permission
 LOGIN_SSO_STATE=redirectUri=/home
+AUTH_DEBUG=0
 ```
 
 说明：
@@ -60,6 +61,7 @@ LOGIN_SSO_STATE=redirectUri=/home
 - `MEDIA_PROXY_ORIGIN` 和 `MEDIA_REWRITE_ORIGINS` 负责把接口返回里的媒体源地址改写为同源代理路径。
 - `LOGIN_PASSWORD_ORIGIN` 是账号密码登录接口上游。
 - `LOGIN_TOKEN_ORIGIN` 是授权码换 token 的接口上游。
+- `AUTH_DEBUG=1` 会在登录页和工作台页的浏览器控制台输出登录态诊断信息。它只输出 token 是否存在、长度、过期剩余时间、当前路径和 localStorage 可写状态，不输出 token 原文。生产排查完建议恢复为 `0`。
 
 ## 本地运行
 

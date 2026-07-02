@@ -32,6 +32,7 @@ const loginRedirectPath = process.env.LOGIN_REDIRECT_PATH || publicEntryPath;
 const loginSsoRedirectPath = process.env.LOGIN_SSO_REDIRECT_PATH || '/pod-permission';
 const loginSsoState = process.env.LOGIN_SSO_STATE || 'redirectUri=/home';
 const mediaProxyPath = '/__media/static';
+const authDebugEnabled = process.env.AUTH_DEBUG === '1';
 
 const pageTemplate = fs.readFileSync(path.join(rootDir, 'page.html'), 'utf8');
 const loginTemplate = fs.readFileSync(path.join(rootDir, 'login.html'), 'utf8');
@@ -251,13 +252,77 @@ function renderPage() {
     .replaceAll('__PUBLIC_ASSET_ORIGIN__', assetOriginForHtml)
     .replaceAll('__PUBLIC_ENTRY_PATH__', publicEntryPath)
     .replaceAll('__APP_TITLE__', escapeHtml(appTitle))
-    .replaceAll('__APP_DESC__', escapeHtml(appDesc));
+    .replaceAll('__APP_DESC__', escapeHtml(appDesc))
+    .replaceAll('__AUTH_DEBUG_SCRIPT__', renderAuthDebugScript('workspace'));
 }
 
 function renderLogin() {
   return loginTemplate
     .replaceAll('__PUBLIC_ENTRY_PATH__', publicEntryPath)
-    .replaceAll('__APP_TITLE__', escapeHtml(appTitle));
+    .replaceAll('__APP_TITLE__', escapeHtml(appTitle))
+    .replaceAll('__AUTH_DEBUG_SCRIPT__', renderAuthDebugScript('login'));
+}
+
+function renderAuthDebugScript(pageName) {
+  if (!authDebugEnabled) {
+    return '';
+  }
+
+  return `<script>
+    (function () {
+      function readTokenInfo() {
+        try {
+          var raw = localStorage.getItem('token');
+          var parsed = raw ? JSON.parse(raw) : null;
+          var createdAt = parsed && Number(parsed.createdAt || 0);
+          var expireIn = parsed && Number(parsed.accessTokenExpireIn || 0);
+          var expiresAt = createdAt && expireIn ? createdAt + expireIn * 1000 : 0;
+          return {
+            exists: Boolean(raw),
+            length: raw ? raw.length : 0,
+            parseOk: Boolean(parsed),
+            hasAccessToken: Boolean(parsed && parsed.accessToken),
+            hasRefreshToken: Boolean(parsed && parsed.refreshToken),
+            createdAt: createdAt || null,
+            accessTokenExpireIn: expireIn || null,
+            secondsUntilAccessExpire: expiresAt ? Math.floor((expiresAt - Date.now()) / 1000) : null
+          };
+        } catch (error) {
+          return { exists: true, parseOk: false, error: error.message };
+        }
+      }
+
+      function storageWritable() {
+        try {
+          var key = '__auth_debug_probe__';
+          localStorage.setItem(key, '1');
+          localStorage.removeItem(key);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function log(label, extra) {
+        console.info('[auth-debug]', label, Object.assign({
+          page: ${JSON.stringify(pageName)},
+          href: location.href,
+          origin: location.origin,
+          path: location.pathname + location.search + location.hash,
+          localStorageWritable: storageWritable(),
+          token: readTokenInfo()
+        }, extra || {}));
+      }
+
+      window.addEventListener('error', function (event) {
+        log('window-error', { message: event.message, source: event.filename, line: event.lineno, column: event.colno });
+      });
+      window.addEventListener('unhandledrejection', function (event) {
+        log('unhandled-rejection', { reason: String(event.reason && (event.reason.stack || event.reason.message) || event.reason) });
+      });
+      log('page-load', { navigationType: performance.getEntriesByType('navigation')[0]?.type || null });
+    })();
+  </script>`;
 }
 
 function createUpstreamProxy(target, mountPath) {

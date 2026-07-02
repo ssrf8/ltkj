@@ -257,9 +257,11 @@ LOGIN_CLIENT_ID=pod
 LOGIN_REDIRECT_PATH=/workspace
 LOGIN_SSO_REDIRECT_PATH=/pod-permission
 LOGIN_SSO_STATE=redirectUri=/home
+AUTH_DEBUG=0
 ```
 
 不要把真实值写入文档或提交。真实域名只放服务端部署环境变量。
+排查个别电脑登录后循环刷新时，可以临时设置 `AUTH_DEBUG=1`，它会在浏览器控制台输出脱敏登录态诊断信息，不输出 token 原文；排查结束后改回 `0`。
 
 ## 7. 常用验证命令
 
@@ -318,6 +320,7 @@ npm start
 - 不要做全局中文替换，之前大范围替换中文曾导致 chunk 语法损坏。
 - 不要把测试 token 写入文件。
 - 不要提交本地日志、抓取原始 HTML、分析中间文件。
+- 不要长期打开 `AUTH_DEBUG=1`，它只用于临时排查浏览器本地登录态问题。
 
 ## 9. Git 状态
 
