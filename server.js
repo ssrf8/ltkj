@@ -314,13 +314,95 @@ function renderAuthDebugScript(pageName) {
         }, extra || {}));
       }
 
+      function pathOnly(input) {
+        try {
+          var url = new URL(input, location.origin);
+          if (url.origin !== location.origin) {
+            return '[external] ' + url.origin + url.pathname;
+          }
+          return url.pathname + url.search;
+        } catch {
+          return String(input || '').slice(0, 180);
+        }
+      }
+
+      function shouldLogRequest(input, status) {
+        var path = pathOnly(input);
+        return path.indexOf('/api/') === 0 || path === '/api' || path.indexOf('/upload/') === 0 || path === '/upload' || Number(status) >= 400;
+      }
+
+      if (!window.__AUTH_DEBUG_NETWORK_PATCHED__) {
+        window.__AUTH_DEBUG_NETWORK_PATCHED__ = true;
+
+        var rawFetch = window.fetch;
+        if (typeof rawFetch === 'function') {
+          window.fetch = function (input, init) {
+            var startedAt = Date.now();
+            var url = typeof input === 'string' ? input : input && input.url;
+            return rawFetch.apply(this, arguments).then(function (response) {
+              if (shouldLogRequest(url, response.status)) {
+                log('fetch', {
+                  method: (init && init.method) || (input && input.method) || 'GET',
+                  url: pathOnly(url),
+                  status: response.status,
+                  ok: response.ok,
+                  durationMs: Date.now() - startedAt
+                });
+              }
+              return response;
+            }, function (error) {
+              log('fetch-error', {
+                url: pathOnly(url),
+                message: error && error.message || String(error),
+                durationMs: Date.now() - startedAt
+              });
+              throw error;
+            });
+          };
+        }
+
+        var rawOpen = XMLHttpRequest.prototype.open;
+        var rawSend = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.open = function (method, url) {
+          this.__authDebug = { method: method || 'GET', url: url, startedAt: Date.now() };
+          return rawOpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function () {
+          var xhr = this;
+          xhr.addEventListener('loadend', function () {
+            var info = xhr.__authDebug || {};
+            if (shouldLogRequest(info.url, xhr.status)) {
+              log('xhr', {
+                method: info.method || 'GET',
+                url: pathOnly(info.url),
+                status: xhr.status,
+                durationMs: Date.now() - (info.startedAt || Date.now())
+              });
+            }
+          });
+          return rawSend.apply(this, arguments);
+        };
+      }
+
+      try {
+        var loadCountKey = '__auth_debug_load_count__';
+        var loadCount = Number(sessionStorage.getItem(loadCountKey) || '0') + 1;
+        sessionStorage.setItem(loadCountKey, String(loadCount));
+      } catch {
+        loadCount = null;
+      }
+
       window.addEventListener('error', function (event) {
         log('window-error', { message: event.message, source: event.filename, line: event.lineno, column: event.colno });
       });
       window.addEventListener('unhandledrejection', function (event) {
         log('unhandled-rejection', { reason: String(event.reason && (event.reason.stack || event.reason.message) || event.reason) });
       });
-      log('page-load', { navigationType: performance.getEntriesByType('navigation')[0]?.type || null });
+      log('page-load', {
+        navigationType: performance.getEntriesByType('navigation')[0]?.type || null,
+        sessionLoadCount: loadCount,
+        referrer: document.referrer || ''
+      });
     })();
   </script>`;
 }
