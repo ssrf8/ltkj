@@ -39,6 +39,19 @@
           return pathname;
         }
 
+        window.__PUBLIC_ROUTE_TO_INTERNAL__ = function (pathname, search, hash, base) {
+          var internalPath = toInternalPath(pathname);
+          if (internalPath === pathname) {
+            return '';
+          }
+
+          if (base && internalPath.toLowerCase().indexOf(base.toLowerCase()) === 0) {
+            internalPath = internalPath.slice(base.length) || '/';
+          }
+
+          return internalPath + search + hash;
+        };
+
         function toPublicUrl(url) {
           if (!url) {
             return url;
@@ -102,12 +115,7 @@
           return;
         }
 
-        rawReplaceState(history.state, '', toInternalPath(location.pathname) + location.search + location.hash);
-
-        window.addEventListener('load', function () {
-          setTimeout(installPublicHistoryMask, 1200);
-        });
-        setTimeout(installPublicHistoryMask, 3000);
+        installPublicHistoryMask();
       })();
     </script>
     <link rel="stylesheet" href="/iconfonts-v4.8.1/iconfont.css" />
