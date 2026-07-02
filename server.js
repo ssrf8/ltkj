@@ -304,14 +304,15 @@ function renderAuthDebugScript(pageName) {
       }
 
       function log(label, extra) {
-        console.info('[auth-debug]', label, Object.assign({
+        var payload = Object.assign({
           page: ${JSON.stringify(pageName)},
           href: location.href,
           origin: location.origin,
           path: location.pathname + location.search + location.hash,
           localStorageWritable: storageWritable(),
           token: readTokenInfo()
-        }, extra || {}));
+        }, extra || {});
+        console.info('[auth-debug]', label, JSON.stringify(payload));
       }
 
       function pathOnly(input) {
