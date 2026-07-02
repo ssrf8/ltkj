@@ -165,6 +165,13 @@ app.use('/__asset/static-dev', express.static(path.join(rootDir, '__asset', 'sta
 
 app.post('/__auth/login/password', express.json({ limit: '1mb' }), handlePasswordLogin);
 
+app.get('/assets/zh_CN.34b0abe4.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.type('application/javascript').sendFile(path.join(rootDir, 'assets', 'zh_CN.34b0abe4.js'));
+});
+
 if (mediaProxyOrigin) {
   app.use(
     mediaProxyPath,
