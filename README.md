@@ -51,6 +51,7 @@ LOGIN_SSO_REDIRECT_PATH=/pod-permission
 LOGIN_SSO_STATE=redirectUri=/home
 AUTH_DEBUG=0
 AUTH_DEBUG_BLOCK_RELOAD=0
+AUTH_DEBUG_NETWORK=0
 ```
 
 说明：
@@ -64,6 +65,7 @@ AUTH_DEBUG_BLOCK_RELOAD=0
 - `LOGIN_TOKEN_ORIGIN` 是授权码换 token 的接口上游。
 - `AUTH_DEBUG=1` 会在登录页和工作台页的浏览器控制台输出登录态诊断信息。它只输出 token 是否存在、长度、过期剩余时间、当前路径和 localStorage 可写状态，不输出 token 原文。生产排查完建议恢复为 `0`。
 - `AUTH_DEBUG_BLOCK_RELOAD=1` 只用于排查首页循环刷新。需要同时开启 `AUTH_DEBUG=1`，它会记录 `location.reload()` 调用栈并拦截刷新，排查结束后必须恢复为 `0`。
+- `AUTH_DEBUG_NETWORK=1` 会额外打印 `/api`、`/upload` 的成功请求明细。默认 `0` 时只打印 400 以上或请求失败，避免控制台被正常接口刷屏。
 
 ## 本地运行
 

@@ -34,6 +34,7 @@ const loginSsoState = process.env.LOGIN_SSO_STATE || 'redirectUri=/home';
 const mediaProxyPath = '/__media/static';
 const authDebugEnabled = process.env.AUTH_DEBUG === '1';
 const authDebugBlockReload = process.env.AUTH_DEBUG_BLOCK_RELOAD === '1';
+const authDebugNetworkEnabled = process.env.AUTH_DEBUG_NETWORK === '1';
 
 const pageTemplate = fs.readFileSync(path.join(rootDir, 'page.html'), 'utf8');
 const loginTemplate = fs.readFileSync(path.join(rootDir, 'login.html'), 'utf8');
@@ -329,6 +330,9 @@ function renderAuthDebugScript(pageName) {
       }
 
       function shouldLogRequest(input, status) {
+        if (!${authDebugNetworkEnabled ? 'true' : 'false'} && Number(status) < 400) {
+          return false;
+        }
         var path = pathOnly(input);
         return path.indexOf('/api/') === 0 || path === '/api' || path.indexOf('/upload/') === 0 || path === '/upload' || Number(status) >= 400;
       }

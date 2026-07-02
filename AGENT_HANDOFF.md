@@ -259,11 +259,13 @@ LOGIN_SSO_REDIRECT_PATH=/pod-permission
 LOGIN_SSO_STATE=redirectUri=/home
 AUTH_DEBUG=0
 AUTH_DEBUG_BLOCK_RELOAD=0
+AUTH_DEBUG_NETWORK=0
 ```
 
 不要把真实值写入文档或提交。真实域名只放服务端部署环境变量。
 排查个别电脑登录后循环刷新时，可以临时设置 `AUTH_DEBUG=1`，它会在浏览器控制台输出脱敏登录态诊断信息，不输出 token 原文；排查结束后改回 `0`。
 如果需要确认是否为前端 `location.reload()` 引起，可以再临时设置 `AUTH_DEBUG_BLOCK_RELOAD=1`，它会记录 reload 调用栈并阻止刷新；排查结束后必须改回 `0`。
+如果需要查看 `/api`、`/upload` 成功请求明细，再临时设置 `AUTH_DEBUG_NETWORK=1`；默认 `0` 只记录失败请求，避免控制台噪音。
 
 ## 7. 常用验证命令
 
@@ -324,6 +326,7 @@ npm start
 - 不要提交本地日志、抓取原始 HTML、分析中间文件。
 - 不要长期打开 `AUTH_DEBUG=1`，它只用于临时排查浏览器本地登录态问题。
 - 不要长期打开 `AUTH_DEBUG_BLOCK_RELOAD=1`，它会改变前端刷新行为。
+- 不要长期打开 `AUTH_DEBUG_NETWORK=1`，它会让控制台持续输出接口明细。
 
 ## 9. Git 状态
 
