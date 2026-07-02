@@ -361,6 +361,12 @@ function renderAuthDebugScript(pageName) {
         }
       }
 
+      function clearRecentNetwork() {
+        try {
+          sessionStorage.setItem('__auth_debug_recent_network__', '[]');
+        } catch {}
+      }
+
       function stackTrace() {
         try {
           return String(new Error('auth-debug-stack').stack || '').split('\\n').slice(0, 14).join('\\n');
@@ -483,6 +489,8 @@ function renderAuthDebugScript(pageName) {
       } catch {
         loadCount = null;
       }
+
+      clearRecentNetwork();
 
       window.addEventListener('error', function (event) {
         log('window-error', { message: event.message, source: event.filename, line: event.lineno, column: event.colno });
