@@ -6,7 +6,15 @@ const n=t({
     const i=()=>document.body&&document.body.classList.remove("simple-404-page");
     const c=()=>{
       a();
-      document.querySelectorAll("header,footer,.lingtu-layout-header,.fixed.w-full.h-48px.bg-white.z-500.flex").forEach(d=>d.remove())
+      setTimeout(()=>{
+        const d=document.querySelector(".simple-404"),l=document.getElementById("app");
+        if(!d||!l)return;
+        for(let p=d;p&&p!==l&&p.parentElement;){
+          const h=p.parentElement;
+          Array.from(h.children).forEach(u=>{u!==p&&u.remove()});
+          p=h
+        }
+      })
     };
     c();
     s(c);
